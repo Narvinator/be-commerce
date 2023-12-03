@@ -3,7 +3,7 @@ const { Category, Product } = require('../../models');
 
 
 
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
   try {
     const categoryData = await Category.findAll({
       include: [{ model: Product }],
@@ -15,7 +15,7 @@ router.get('/', (req, res) => {
 
 });
 
-router.get('/:id', (req, res) => {
+router.get('/:id', async (req, res) => {
   try {
     const categoryData = await Category.findByPk(req.params.id, {
       include: [{ model: Product }, ],
@@ -54,7 +54,7 @@ router.put('/:id', async (req, res) => {
       },
     });
     if (!catData[0]) {
-      res.status(404).json({ message: 'No category with this id!' });
+      res.status(404).json({ message: 'Incorrect or Non-existent ID!' });
       return;
     }
     res.status(200).json(catData);
@@ -71,7 +71,7 @@ router.delete('/:id', async (req, res) => {
       },
     });
     if (!catData[0]) {
-      res.status(404).json({ message: 'No category with this id!' });
+      res.status(404).json({ message: 'Incorrect or Non-existent ID!' });
       return;
     }
     res.status(200).json(catData);
